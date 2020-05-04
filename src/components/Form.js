@@ -18,6 +18,8 @@ const orderSchema = yup.object().shape({
   ThreeCheese: yup.string(),
   ExtraCheese: yup.string(),
 });
+
+//Data
 const topping = [
   { _id: 1, label: "Sausage" },
   { _id: 2, label: "Pepperoni" },
@@ -48,12 +50,14 @@ export default function Form() {
   });
   const [post, setPost] = useState([]);
 
+  //Validate Form
   useEffect(() => {
     orderSchema.isValid(formState).then((valid) => {
       setButtonDisabled(!valid);
     });
   },[formState]);
 
+  //Submit
   const formSubmit = (e) => {
     e.preventDefault();
     e.persist();
@@ -75,6 +79,7 @@ export default function Form() {
       .catch((err) => console.log(err.response));
   };
 
+  //Validation
   const validation = (e) => {
     yup
       .reach(orderSchema, e.target.name)
@@ -152,7 +157,7 @@ export default function Form() {
           />
         </label>
         <button data-cy="Submit" disabled={buttonDisabled}>
-          Place Order
+          Add Order
         </button>
         <pre>{JSON.stringify(post, null, 2)}</pre>
       </form>
